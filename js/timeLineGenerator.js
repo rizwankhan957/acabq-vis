@@ -3076,8 +3076,8 @@ function clsTimeLineGenerator(p_Config) {
 
     //---------------------------------------------------------------
     LMe.displayDocumentDetails = function (p_DocumentDetails) {
+   
 
-       
         //Display document title
         d3.select("#doc-title").text(p_DocumentDetails.DocTitle);
 
@@ -3085,7 +3085,7 @@ function clsTimeLineGenerator(p_Config) {
         var LInfo = p_DocumentDetails.DatePublish + " | " + p_DocumentDetails.DocumentType[0];
         d3.select("#doc-info").text(LInfo);
         d3.select("#doc-url").html(
-				'<a href= '+p_DocumentDetails.DocumentURL+' target="_blank">' + 
+				'<a href= ' + p_DocumentDetails.DocumentURL + ' target="_blank">' +
 				p_DocumentDetails.DocumentURL +
 				"</a>");
 
@@ -3135,12 +3135,12 @@ function clsTimeLineGenerator(p_Config) {
         //d3.select("#top-keywords").text(LKeyowrdsStr);
 
         //load and display the text document
-//        d3.select("#doc-content").text("Loading..");
+        //        d3.select("#doc-content").text("Loading..");
 
-//        var LURL = "data/txt/" + p_DocumentDetails.Filename;
-//        d3.text(LURL, function (p_content) {
-//            d3.select("#doc-content").text(p_content);
-//        });
+        //        var LURL = "data/txt/" + p_DocumentDetails.Filename;
+        //        d3.text(LURL, function (p_content) {
+        //            d3.select("#doc-content").text(p_content);
+        //        });
     }
 
     //---------------------------------------------------------------
@@ -3149,6 +3149,7 @@ function clsTimeLineGenerator(p_Config) {
         d3.select("#doc-info").text("");
         d3.select("#top-keywords").text("");
         d3.select("#doc-content").text("");
+        d3.select("#doc-url").html("");
     };
 
     //---------------------------------------------------------------
