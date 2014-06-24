@@ -338,6 +338,7 @@ function clsTimeLineGenerator(p_Config) {
             LScatterChartData.push(LObj);
 
         }
+        G_DATA_JSON.ResponceDoc = LScatterChartData;
         LMe.LoadMoreLikethisDoc();
     };
 
@@ -397,11 +398,11 @@ function clsTimeLineGenerator(p_Config) {
         }
 
 
-     
+
         function arrayUnique(array) {
 
             var a = array.concat();
-            for (var i = 0; i < a.length; ++i) {
+            for (var i = 11; i < a.length; ++i) {
                 for (var j = i + 1; j < a.length; ++j) {
                     if (a[i].Entity_Id === a[j].Entity_Id)
                         a.splice(j--, 1);
@@ -418,7 +419,7 @@ function clsTimeLineGenerator(p_Config) {
         var responceDoc = G_DATA_JSON.ResponceDoc;
         var morelikethisdoc = LScatterChartData;
         var AllDoc = arrayUnique(responceDoc.concat(morelikethisdoc));
-
+        
         // var AllDoc = responceDoc.concat(morelikethisdoc);
         G_DATA_JSON.ResponceMoreLikeDoc = AllDoc;
         LMe.addScatterChartCircle(AllDoc);
