@@ -182,42 +182,36 @@ function clsTimeLineGenerator(p_Config) {
     //---------------------------------------------------------------
     LMe.prepareScatterChart = function () {
         //console.log("preparing the scatter chart");
-
+       
         //Display all the documents initially
-        var LMTest = G_DATA_JSON.WORD_DOC_LOAD,
+        var LMJsonData = G_DATA_JSON.WORD_DOC_LOAD,
             LScatterChartData,
             LCompeleteChartData,
             LMoreLikeThis,
-        LPrevYVal = 0;
+            LPrevYVal = 0;
 
         var dateparse = d3.time.format("%Y-%m-%dT%H:%M:%SZ");
-        LMoreLikeThis = LMTest.moreLikeThis;
+        LMoreLikeThis = LMJsonData.moreLikeThis;
 
-        var dataArrayTest = [];
-        var dataArrayTest12 = [];
+        var docArrayofResponce = [];
         var ducumentID = [];
         var MoreLikeTisDoc = [];
-        for (var LLoopIndex = 0; LLoopIndex < LMTest.response.docs.length; LLoopIndex++) {
+        for (var LLoopIndex = 0; LLoopIndex < LMJsonData.response.docs.length; LLoopIndex++) {
 
-            var LDoc = LMTest.response.docs[LLoopIndex],
+            var LDoc = LMJsonData.response.docs[LLoopIndex],
                     LDocumentName = LDoc.label,
                     LDocumentTitle = LDoc.teaser,
                     LDocumentDate = dateparse.parse(LDoc.publicationDate),
                     LSize = LDoc["tf(content,'peace')"],
                     LEntity_Id = LDoc.entity_id,
                     LDocument_Type = LDoc.sm_field_document_type,
-                 LDocument_Subject = LDoc.sm_vid_Document_Subject,
-                 LDocumentURL = LDoc.url,
-
-            LDocScore = LDoc.score;
+                    LDocument_Subject = LDoc.sm_vid_Document_Subject,
+                    LDocumentURL = LDoc.url,
+                    LDocScore = LDoc.score;
             //LDocumentkeywordOccurances = LDoc.tf(content, 'peace');
 
 
-
-
-
             var LDocumentCircleData = {
-
                 Filename: LDocumentName,
                 DatePublish: LDocumentDate,
                 DocTitle: LDocumentTitle,
@@ -229,21 +223,18 @@ function clsTimeLineGenerator(p_Config) {
                 BubbleColor: '#6999c9',
                 Score: LDocScore,
                 DocumentType: LDocument_Type,
-                Document_Subject : LDocument_Subject,
-                DocumentURL :LDocumentURL
+                Document_Subject: LDocument_Subject,
+                DocumentURL: LDocumentURL
             };
 
             //Add the frequency data to the date published
-            dataArrayTest.push(LDocumentCircleData);
+            docArrayofResponce.push(LDocumentCircleData);
 
         }
 
-        for (var LLoopIndex = 0; LLoopIndex < dataArrayTest.length; LLoopIndex++) {
-            var ii = dataArrayTest[LLoopIndex].Entity_Id;
+        for (var LLoopIndex = 0; LLoopIndex < docArrayofResponce.length; LLoopIndex++) {
+            var ii = docArrayofResponce[LLoopIndex].Entity_Id;
             ducumentID.push(ii);
-
-
-
         }
 
         for (var LLoopIndex = 0; LLoopIndex < ducumentID.length; LLoopIndex++) {
@@ -266,12 +257,10 @@ function clsTimeLineGenerator(p_Config) {
                                     LDocumentDate = dateparse.parse(LDoc.publicationDate),
                                     LSize = LDoc["tf(content,'peace')"],
                                     LEntity_Id = LDoc.entity_id,
-                                     LDocScore = LDoc.score,
-                                     LDocument_Subject = LDoc.sm_vid_Document_Subject,
-                                     LDocument_Type = LDoc.sm_field_document_type,
-                                     LDocumentURL = LDoc.url
-            //LDocumentkeywordOccurances = LDoc.tf(content, 'peace');
-
+                                    LDocScore = LDoc.score,
+                                    LDocument_Subject = LDoc.sm_vid_Document_Subject,
+                                    LDocument_Type = LDoc.sm_field_document_type,
+                                    LDocumentURL = LDoc.url
 
 
 
@@ -289,19 +278,16 @@ function clsTimeLineGenerator(p_Config) {
                 BubbleColor: 'grey',
                 Score: LDocScore,
                 DocumentType: LDocument_Type,
-                Document_Subject : LDocument_Subject,
+                Document_Subject: LDocument_Subject,
                 DocumentURL: LDocumentURL
             };
-
 
             //Add the frequency data to the date published
             G_DATA_JSON.MoreLikeThisDoc.push(LDocumentCircleData);
 
         }
 
-        var LUnorderedScatterChartData122 = G_DATA_JSON.DOC_DATA;
-
-        var LUnorderedScatterChartData = dataArrayTest;
+        var LUnorderedScatterChartData = docArrayofResponce;
         var LScatterChartData = [],
                     LPrevYVal = 0;
         for (var LLoopIndex = 0; LLoopIndex < LUnorderedScatterChartData.length; LLoopIndex++) {
@@ -332,7 +318,7 @@ function clsTimeLineGenerator(p_Config) {
             }
 
             LPrevYVal = LY;
-          
+
             // bring in data from doc_data.json
             LObj.id = LLoopIndex;
             LObj.Filename = LDocumentName;
@@ -352,8 +338,6 @@ function clsTimeLineGenerator(p_Config) {
             LScatterChartData.push(LObj);
 
         }
-        G_DATA_JSON.ResponceDoc = LScatterChartData;
-        //LMe.addScatterChartCircle(LScatterChartData);
         LMe.LoadMoreLikethisDoc();
     };
 
@@ -438,8 +422,6 @@ function clsTimeLineGenerator(p_Config) {
         // var AllDoc = responceDoc.concat(morelikethisdoc);
         G_DATA_JSON.ResponceMoreLikeDoc = AllDoc;
         LMe.addScatterChartCircle(AllDoc);
-
-
     }
 
     //---------------------------------------------------------------
@@ -665,7 +647,7 @@ function clsTimeLineGenerator(p_Config) {
         }, 0)
     };
 
-    //------------Bubble COlor
+    //------------Bubble Color
 
     LMe.getBubbleColor = function (d) {
         return d.BubbleColor;
@@ -695,7 +677,7 @@ function clsTimeLineGenerator(p_Config) {
 
         //Central circle is present so draw time lines
         getDocumentAssociationMatrixData(function (p_assocData) {
-
+           
             var LDocCol;
             var LCenterCircleData = LMe.focussedCircle,
                 LCenterCircle;
@@ -763,14 +745,6 @@ function clsTimeLineGenerator(p_Config) {
                 //Circle is present in the visible range
                 //display the association
                 //var LAssocValue = LDocCol[d.Filename],
-
-
-
-
-
-
-
-
 
 
                 console.log(LCentralDocName + " vs " + d.Filename);
@@ -850,41 +824,8 @@ function clsTimeLineGenerator(p_Config) {
     //---------------------------------------------------------------
     LMe.getRadiusOfScatterBubble = function (d, p_ForKeyword) {
 
-
-        var LValues = d.keywordOccurances,
-            LKeywords = d.keywords,
-            LTotal = 0;
-
-        if (p_ForKeyword) {
-            //Get total for the passed keyword
-            var LIndex = libGetIndexOfWord(LKeywords, p_ForKeyword);
-            LTotal = LValues[LIndex];
-        }
-        else {
-
-            //Get total for all keywords
-            for (var LLoopIndex = 0; LLoopIndex < LValues.length; LLoopIndex++) {
-                LTotal += LValues[LLoopIndex];
-            }
-            /*if(LMe.focussedCircle)
-            {
-            if(d.Filename == LMe.focussedCircle.Filename) return 20;
-            }*/
-        }
-
-
-        //        if (LTotal < 101) {
-        //            return 5;
-        //        }
-        //        else if (LTotal > 100 && LTotal < 1001) {
-        //            return 10;
-        //        }
-        //        else if (LTotal > 1000) {
         return d.LSize;
-        //        }
-        //        else {
-        //            return 5;
-        //        }
+    
     };
 
     //---------------------------------------------------------------
@@ -901,31 +842,6 @@ function clsTimeLineGenerator(p_Config) {
             d.DocumentType[0] +
             '</div>';
 
-
-        //Get top 5 keywords from the document
-
-
-        //            for (var LLoopIndex = 0; LLoopIndex < d.Document_Subject.length; LLoopIndex++) {
-        //                var LVal = d.Document_Subject[LLoopIndex];
-        //                    for (var LLoopIndex1 = 0; LLoopIndex1 < LDocOccuranceArr.length; LLoopIndex1++) {
-        //                        var ArrayEl = LDocOccuranceArr[LLoopIndex1];
-        //                        if (ArrayEl == LVal) {
-        //                            var LFound = false;
-        //                            //check if the index already exists in the keyword array
-        //                            for (var LLoopIndex2 = 0; LLoopIndex2 < LKeywordIndexArray.length; LLoopIndex2++) {
-        //                                var LKeywordIndex = LKeywordIndexArray[LLoopIndex2];
-        //                                if (LKeywordIndex == LLoopIndex1) {
-        //                                    LFound = true;
-        //                                    break;
-        //                                }
-        //                            }
-
-        //                            if (!LFound) {
-        //                                LKeywordIndexArray.push(LLoopIndex1);
-        //                            }
-        //                        }
-        //                    }
-        //                }
 
         //Get comma seperated keywords
 
@@ -2260,7 +2176,7 @@ function clsTimeLineGenerator(p_Config) {
     //---------------------------------------------------------------
     LMe.handleOnBrush = function () {
         ///var LBrushExtend = LMe.brush.extend();
-
+       
         var LBrushExtend = LMe.brush.extent(),
         LLowerDate = LBrushExtend[0],
         LUpperDate = LBrushExtend[1];
@@ -2786,6 +2702,7 @@ function clsTimeLineGenerator(p_Config) {
 
     //---------------------------------------------------------------
     LMe.createSlider = function () {
+       
         var LMainContainer = LMe.scatterChartGroup.append("g").attr("class", "doc-assoc-slider-cntnr").style("display", "none"),
             LLblContainer = LMainContainer.append("g"),
             LLbl = LLblContainer.append("text").text("Document Similarity Threshold ('0' to show all relationships)").attr("class", "doc-assoc-slider-lbl"),

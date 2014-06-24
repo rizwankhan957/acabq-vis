@@ -87,7 +87,7 @@ function bootstrap() {
 
 
     d3.json("data/acabq-query-peace-comprehensive-medium.json", function (p_data) {
-
+   
      //The json has been loaded
         G_DATA_JSON.WORD_DOC_LOAD = p_data;
 
